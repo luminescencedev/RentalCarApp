@@ -1,35 +1,40 @@
 package com.example.RentalCarApp;
 
-import org.springframework.web.bind.annotation.*;
-import java.util.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.ArrayList;
 
 @RestController
-@RequestMapping("/cars")
-class CarController {
-    private final Map<String, Car> cars = new HashMap<>();
+public class CarController {
+
+    ArrayList<Car>cars = new ArrayList<Car>();
 
     public CarController() {
-        cars.put("11AA22", new Car("11AA22", "Ferrari", 100, false));
-        cars.put("22BB33", new Car("22BB33", "Tesla", 80, false));
+        Car car = new Car("AA11BB", "ferrari", 2000);
+        cars.add(car);
+        car = new Car("BB22CC", "porsche", 1000);
+        cars.add(car);
+        car = new Car("CC33DD", "peugeot", 500);
+        cars.add(car);
     }
 
-    @GetMapping
-    public List<Car> listOfCars() {
-        return new ArrayList<>(cars.values());
+    @GetMapping("/cars")
+    public ArrayList<Car> getCars() {
+        return cars;
     }
 
-    @GetMapping("/{plateNumber}")
-    public Car aCar(@PathVariable("plateNumber") String plateNumber) {
-        return cars.getOrDefault(plateNumber, null);
-    }
-
-    @PutMapping("/{plateNumber}")
-    public void rentOrGetBack(@PathVariable("plateNumber") String plateNumber,
-                              @RequestParam("rent") boolean rent,
-                              @RequestBody(required = false) Dates dates) {
-        Car car = cars.get(plateNumber);
-        if (car != null) {
-            car.setRented(rent);
+    @GetMapping("/cars/{plateNumber}")
+    public Car disBonjour(@PathVariable("plateNumber") String plaque){
+        int i=0;
+        while(i<cars.size() && !cars.get(i).getPlateNumber().equals(plaque)){
+            i++;
+        }
+        if(i < cars.size()){
+            return cars.get(i);
+        } else {
+            return null;
         }
     }
 }
