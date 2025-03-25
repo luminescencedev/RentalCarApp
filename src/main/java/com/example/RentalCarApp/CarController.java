@@ -26,7 +26,7 @@ public class CarController {
     }
 
     @GetMapping("/cars/{plateNumber}")
-    public Car disBonjour(@PathVariable("plateNumber") String plaque){
+    public Car showAllCar(@PathVariable("plateNumber") String plaque){
         int i=0;
         while(i<cars.size() && !cars.get(i).getPlateNumber().equals(plaque)){
             i++;
