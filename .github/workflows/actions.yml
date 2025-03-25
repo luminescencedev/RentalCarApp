@@ -16,4 +16,5 @@ jobs:
         working-directory: .
         run: |
           export SHELL=/bin/bash
+          chmod 777 ./gradlew
           ./gradlew build
