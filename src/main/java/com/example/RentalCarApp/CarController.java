@@ -20,6 +20,8 @@ public class CarController {
         cars.add(car);
         car = new Car("DD44EE", "lancia", 500);
         cars.add(car);
+        car = new Car("EE55FF", "lancia2", 2500);
+        cars.add(car);
     }
 
     @GetMapping("/cars")
